@@ -16,6 +16,7 @@ const LoginComponent = (props) => {
         onclickKakao,
         googleClientID,
         responseGoogle,
+        onSuccessGoogleLogin,
     } = props;
 
     return (
@@ -64,7 +65,7 @@ const LoginComponent = (props) => {
                 </div>
                 <div>
                     <GoogleLogin
-                        onSuccess={responseGoogle}
+                        onSuccess={onSuccessGoogleLogin}
                         onError={responseGoogle}
                     />
                 </div>

@@ -8,6 +8,9 @@ const HomeContainer = () => {
     const [apiResult, setApiResult] = useState({
         type: "대기",
         message: "api 요청 전",
+        data: {
+            loginType: "normal",
+        },
     });
     const navigate = useNavigate();
     const onClickLogout = async () => {

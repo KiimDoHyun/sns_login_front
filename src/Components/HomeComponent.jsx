@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const HomeComponent = (props) => {
     const { onClickRequestApi, onClickLogout, apiResult } = props;
+    console.log(apiResult);
     return (
         <HomeComponentBlock>
             HomeComponent
@@ -13,6 +14,10 @@ const HomeComponent = (props) => {
                 <Button onClick={onClickRequestApi}>Request Api</Button>
                 <div>상태: {apiResult.type}</div>
                 <div>메세지: {apiResult.message}</div>
+                <div>
+                    {apiResult.data.loginType || "일반"} 로 로그인된
+                    사용자입니다.
+                </div>
             </div>
         </HomeComponentBlock>
     );

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { KakaoLoginApi } from "../api/auth";
 import KakaoLoginComponent from "../Components/KakaoLoginComponent";
 
 const KakaoLoginContainer = () => {
     // 주소에서 코드 값을 가져온다.
     const [message, setMessage] = useState("카카오 로그인 중입니다.");
+    const navigate = useNavigate();
 
     // 백엔드로 인가 코드를 넘기고 사용자 정보를 받아온다.
     /*
@@ -31,6 +33,10 @@ const KakaoLoginContainer = () => {
                 console.log("data: ", data);
                 if (data.type === "success") {
                     setMessage("카카오 로그인 정보를 확인했습니다.");
+
+                    setTimeout(() => {
+                        navigate("/home");
+                    }, 1000);
                 }
             } catch (e) {
                 setMessage(

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
 import { CLIENT_ID, REDIRECT_URI } from "../key";
@@ -7,6 +8,7 @@ const LoginContainer = () => {
     const [ID, setID] = useState("");
     const [PW, setPW] = useState("");
     const [resultMsg, setResultMsg] = useState({ message: "", type: null });
+    const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -15,6 +17,7 @@ const LoginContainer = () => {
             const {
                 data: { message, type },
             } = await LoginApi({ ID, PW });
+            navigate("/home");
             setResultMsg({ message: message || "Error", type });
         } catch (e) {
             setResultMsg({ message: "Error", type: null });

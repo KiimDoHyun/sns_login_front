@@ -17,8 +17,10 @@ const LoginContainer = () => {
             const {
                 data: { message, type },
             } = await LoginApi({ ID, PW });
-            navigate("/home");
             setResultMsg({ message: message || "Error", type });
+            if (type === "success") {
+                navigate("/home");
+            }
         } catch (e) {
             setResultMsg({ message: "Error", type: null });
         }

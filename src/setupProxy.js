@@ -10,7 +10,7 @@ module.exports = function (app) {
     );
     //kauth.kakao.com/oauth
 
-    https: app.use(
+    app.use(
         "/oauth",
         createProxyMiddleware({
             target: "https://kauth.kakao.com",

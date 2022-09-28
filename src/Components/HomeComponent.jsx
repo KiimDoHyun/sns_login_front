@@ -3,11 +3,11 @@ import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const HomeComponent = (props) => {
-    const { onClickRequestApi, apiResult } = props;
+    const { onClickRequestApi, onClickLogout, apiResult } = props;
     return (
         <HomeComponentBlock>
             HomeComponent
-            <Button>Logout</Button>
+            <Button onClick={onClickLogout}>Logout</Button>
             <div>
                 <h3>Api 통신 테스트</h3>
                 <Button onClick={onClickRequestApi}>Request Api</Button>

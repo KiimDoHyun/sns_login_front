@@ -9,7 +9,7 @@ const HomeContainer = () => {
         type: "대기",
         message: "api 요청 전",
         data: {
-            loginType: "normal",
+            loginType: "대기",
         },
     });
     const navigate = useNavigate();

@@ -14,10 +14,7 @@ const HomeComponent = (props) => {
                 <Button onClick={onClickRequestApi}>Request Api</Button>
                 <div>상태: {apiResult.type}</div>
                 <div>메세지: {apiResult.message}</div>
-                <div>
-                    {apiResult.data.loginType || "일반"} 로 로그인된
-                    사용자입니다.
-                </div>
+                <div>로그인 유형: {apiResult.data.loginType}</div>
             </div>
         </HomeComponentBlock>
     );

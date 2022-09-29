@@ -13,7 +13,9 @@ const NaverLoginContainer = () => {
     const naverRef = useRef();
 
     const handleNaverLogin = () => {
-        naverRef.current.children[0].click();
+        //naverRef.current.children[0].click();
+        initNaverLogin();
+        userAccessToken();
     };
 
     const onSuccessNaverLogin = async (info) => {
@@ -23,7 +25,7 @@ const NaverLoginContainer = () => {
                 const response = await NaverLoginApi(body);
                 console.log(`res`, response);
                 navigate("/home");
-                rc_setUser_userInfo(response.data);
+                //rc_setUser_userInfo(response.data);
             } catch (e) {
                 console.log(`error:`, e);
             }
@@ -45,7 +47,7 @@ const NaverLoginContainer = () => {
 
         console.log(`naverLogin`, naverLogin);
 
-        naverLogin.getLoginStatus(function (status) {
+        naverLogin.getLoginStatus(async function (status) {
             if (status) {
                 onSuccessNaverLogin(naverLogin);
             }
@@ -60,11 +62,6 @@ const NaverLoginContainer = () => {
         const token = window.location.href.split("=")[1].split("&")[0];
         console.log(`token`, token);
     };
-
-    useEffect(() => {
-        initNaverLogin();
-        userAccessToken();
-    }, []);
 
     const propDatas = {
         naverRef,

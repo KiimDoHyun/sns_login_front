@@ -18,7 +18,7 @@ const NaverLoginContainer = () => {
         callbackUrl: NAVER_KEY.CALLBAKC_URL,
         isPopup: false,
         // 버튼 타입 : 색상, 타입, 크기
-        loginButton: { color: "green", type: 3, height: 58 },
+        loginButton: { color: "green", type: 3, height: 40 },
         callbackHandle: true,
     });
 

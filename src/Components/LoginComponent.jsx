@@ -99,5 +99,16 @@ const LoginComponentBlock = styled.div`
     .social_Login_Button {
         cursor: pointer;
     }
+    .social_kakao {
+        width: 208px;
+        height: 45px;
+    }
+    .social_kakao img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: solid 1px #cbb700;
+        border-radius: 5px;
+    }
 `;
 export default LoginComponent;

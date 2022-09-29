@@ -8,6 +8,7 @@ const GoogleLoginComponent = (props) => {
         <GoogleLogin
             onSuccess={onSuccessGoogleLogin}
             onError={responseGoogle}
+            width="180"
         />
     );
 };

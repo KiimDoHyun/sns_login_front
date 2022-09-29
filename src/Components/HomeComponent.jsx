@@ -10,7 +10,6 @@ const HomeComponent = (props) => {
         rc_user_userInfoValue,
     } = props;
 
-    console.log("rc_user_userInfoValue: ", rc_user_userInfoValue);
     return (
         <HomeComponentBlock>
             <div className="header">
@@ -149,24 +148,29 @@ const HomeComponent = (props) => {
                                     ))}
                                 </>
                             )}
+                            {/* 소셜 서비스 사용자 정보 */}
+                            {rc_user_userInfoValue.data.loginType ===
+                                "naver" && (
+                                <>
+                                    <div className="infoBox infoBox_Header">
+                                        <div>네이버 정보</div>
+                                    </div>
+                                    {Object.keys(
+                                        rc_user_userInfoValue.socialData
+                                    ).map((item, idx) => (
+                                        <div key={idx} className="infoBox">
+                                            <div>{item} </div>
+                                            <div>
+                                                {String(
+                                                    rc_user_userInfoValue
+                                                        .socialData[item]
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
                         </div>
-                        {/* {rc_user_userInfoValue &&
-                    rc_user_userInfoValue.data.loginType === "normal" && (
-                        <div>
-                            {rc_user_userInfoValue
-                                ? Object.keys(rc_user_userInfoValue).map(
-                                      (item, idx) => (
-                                          <div key={idx}>
-                                              <div>{item}: </div>
-                                              <div>
-                                                  {rc_user_userInfoValue[item]}
-                                              </div>
-                                          </div>
-                                      )
-                                  )
-                                : null}
-                        </div>
-                    )} */}
                     </div>
                     <div className="apiTest">
                         <h3>Api 통신 테스트</h3>
@@ -199,6 +203,11 @@ const HomeComponentBlock = styled.div`
     }
     .infoBox_Header {
         background-color: #ddd;
+    }
+
+    .infoBox_Header > div {
+        width: 100% !important;
+        border-left: none !important;
     }
     .infoBox {
         display: flex;

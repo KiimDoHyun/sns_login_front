@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NaverLoginComponent from "../Components/NaverLoginComponent";
 import { NAVER_KEY } from "../key";
 import { NaverLoginApi } from "../api/auth";
@@ -9,8 +9,12 @@ import { useSetRecoilState } from "recoil";
 const NaverLoginContainer = () => {
     const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
     const { naver } = window;
-    const [userInfo, setUserInfo] = useState();
     const navigate = useNavigate();
+    const naverRef = useRef();
+
+    const handleNaverLogin = () => {
+        naverRef.current.children[0].click();
+    };
 
     const onSuccessNaverLogin = async (info) => {
         if (info) {
@@ -39,14 +43,13 @@ const NaverLoginContainer = () => {
         });
         naverLogin.init();
 
-        naverLogin.getLoginStatus(async function (status) {
+        console.log(`naverLogin`, naverLogin);
+
+        naverLogin.getLoginStatus(function (status) {
             if (status) {
-                setUserInfo(naverLogin);
+                onSuccessNaverLogin(naverLogin);
             }
         });
-        console.log(`userInfo`, userInfo);
-
-        onSuccessNaverLogin(userInfo);
     };
 
     const userAccessToken = () => {
@@ -63,7 +66,12 @@ const NaverLoginContainer = () => {
         userAccessToken();
     }, []);
 
-    return <NaverLoginComponent />;
+    const propDatas = {
+        naverRef,
+        handleNaverLogin,
+    };
+
+    return <NaverLoginComponent {...propDatas} />;
 };
 
 export default NaverLoginContainer;

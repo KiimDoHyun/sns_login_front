@@ -1,43 +1,50 @@
 import React from "react";
-import styled from "styled-components";
-import naver_icon from "../asset/image/naver_icon_rectangle.png";
+import styled, { keyframes } from "styled-components";
 
 const NaverLoginComponent = () => {
     return (
-        <div>
+        <NaverLoginComponentBlock>
             <div className="loaderBox">
                 <div className="loader" />
             </div>
             <h3>{"네이버 로그인중입니다."}</h3>
-        </div>
+        </NaverLoginComponentBlock>
     );
-    // return <div id="naverIdLogin" onClick={handleNaverLogin}></div>;
 };
 
 export default NaverLoginComponent;
-
+const spin = keyframes`
+from {
+    transform: rotate(0deg);
+}
+to {
+    transform: rotate(360deg);
+}
+`;
 const NaverLoginComponentBlock = styled.div`
-    .NaverIcon {
-        margin-left: 1px;
-        width: 30px;
-        height: 30px;
-    }
-`;
+    width: 100vw;
+    height: 100vh;
 
-const NaverLoginBtn = styled.button`
     display: flex;
+    justify-content: center;
     align-items: center;
-    width: 208px;
-    height: 40px;
-    background-color: #03c75a;
-    border: solid 1px #d2e3fc;
-    border-radius: 5px;
-`;
+    flex-direction: column;
+    gap: 2rem;
 
-const NaverLoginTitle = styled.span`
-    //color: ${({ theme }) => theme.White};
-    color: white;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
+    .loaderBox {
+        width: 70px;
+        height: 70px;
+        position: relative;
+        animation: ${spin} 2s 1s infinite;
+    }
+
+    .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        background-color: #4ab56a;
+    }
 `;

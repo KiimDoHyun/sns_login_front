@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from "react";
 import NaverLoginComponent from "../Components/NaverLoginComponent";
 import { NAVER_KEY } from "../key";
+import { NaverLoginApi } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { rc_user_userInfo } from "../store/user";
+import { useSetRecoilState } from "recoil";
 
 const NaverLoginContainer = () => {
+    const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
     const { naver } = window;
     const [userInfo, setUserInfo] = useState();
+    const navigate = useNavigate();
+
+    const onSuccessNaverLogin = async (info) => {
+        if (info) {
+            try {
+                const body = { ...info };
+                const response = await NaverLoginApi(body);
+                console.log(`res`, response);
+                navigate("/home");
+                rc_setUser_userInfo(response.data);
+            } catch (e) {
+                console.log(`error:`, e);
+            }
+        } else {
+            console.log(`Failed Login`);
+        }
+    };
 
     const initNaverLogin = () => {
         const naverLogin = new naver.LoginWithNaverId({
@@ -16,14 +38,15 @@ const NaverLoginContainer = () => {
             callbackHandle: true,
         });
         naverLogin.init();
-        console.log(`naverLogin`, naverLogin);
 
-        naverLogin.getLoginStatus(async (status) => {
+        naverLogin.getLoginStatus(async function (status) {
             if (status) {
-                setUserInfo(naverLogin.user);
+                setUserInfo(naverLogin);
             }
         });
         console.log(`userInfo`, userInfo);
+
+        onSuccessNaverLogin(userInfo);
     };
 
     const userAccessToken = () => {

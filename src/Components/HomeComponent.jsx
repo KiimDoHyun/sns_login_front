@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "reactstrap";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const HomeComponent = (props) => {

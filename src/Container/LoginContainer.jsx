@@ -51,7 +51,7 @@ const LoginContainer = () => {
         });
 
         naverLogin.init();
-    }, []);
+    }, [naver.LoginWithNaverId]);
 
     const propDatas = {
         ID,

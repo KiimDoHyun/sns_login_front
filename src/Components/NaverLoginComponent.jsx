@@ -1,13 +1,14 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-const NaverLoginComponent = () => {
+const NaverLoginComponent = (props) => {
+    const { message } = props;
     return (
         <NaverLoginComponentBlock>
             <div className="loaderBox">
                 <div className="loader" />
             </div>
-            <h3>{"네이버 로그인중입니다."}</h3>
+            <h3>{message}</h3>
         </NaverLoginComponentBlock>
     );
 };

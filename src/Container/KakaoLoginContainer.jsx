@@ -55,7 +55,7 @@ const KakaoLoginContainer = () => {
             getUserInfo_Kakao();
         } else {
         }
-    }, []);
+    }, [navigate, rc_setUser_userInfo]);
 
     const propDatas = {
         message,

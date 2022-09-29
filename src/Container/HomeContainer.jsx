@@ -8,6 +8,7 @@ import { googleLogout } from "@react-oauth/google";
 import { rc_user_userInfo } from "../store/user";
 
 const HomeContainer = () => {
+    const [count, setCount] = useState(0);
     const [apiResult, setApiResult] = useState({
         type: "대기",
         message: "api 요청 전",
@@ -18,20 +19,23 @@ const HomeContainer = () => {
     const rc_user_userInfoValue = useRecoilValue(rc_user_userInfo);
     const navigate = useNavigate();
     const onClickLogout = async () => {
-        googleLogout();
-        try {
-            const { data } = await LogoutApi();
-            if (data.type === "logout_success") {
-                alert("로그인 화면으로 이동합니다.");
-                navigate("/");
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            googleLogout();
+            try {
+                const { data } = await LogoutApi();
+                if (data.type === "logout_success") {
+                    alert("로그인 화면으로 이동합니다.");
+                    navigate("/");
+                }
+            } catch (e) {
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
         }
     };
 
     // api 요청.
     const onClickRequestApi = async () => {
+        setCount(count + 1);
         try {
             const { data } = await testApi();
             setApiResult(data);
@@ -52,6 +56,7 @@ const HomeContainer = () => {
         apiResult,
         onClickLogout,
         rc_user_userInfoValue,
+        count,
     };
 
     return <HomeComponent {...propDatas} />;

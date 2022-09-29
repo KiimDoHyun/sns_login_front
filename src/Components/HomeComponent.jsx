@@ -8,6 +8,7 @@ const HomeComponent = (props) => {
         onClickLogout,
         apiResult,
         rc_user_userInfoValue,
+        count,
     } = props;
 
     return (
@@ -175,6 +176,7 @@ const HomeComponent = (props) => {
                     <div className="apiTest">
                         <h3>Api 통신 테스트</h3>
                         <Button onClick={onClickRequestApi}>Request Api</Button>
+                        <div>api호출 횟수: {count}</div>
                         <div>상태: {apiResult.type}</div>
                         <div>메세지: {apiResult.message}</div>
                         <div>로그인 유형: {apiResult.data.loginType}</div>

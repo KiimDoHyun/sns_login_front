@@ -2,33 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import naver_icon from "../asset/image/naver_icon_rectangle.png";
 
-const NaverLoginComponent = (props) => {
-    const { naverRef, handleNaverLogin } = props;
-
+const NaverLoginComponent = () => {
     return (
-        <NaverLoginComponentBlock>
-            <div
-                ref={naverRef}
-                className="naverIdLogin"
-                id="naverIdLogin"
-            ></div>
-            <NaverLoginBtn onClick={handleNaverLogin}>
-                <img className="NaverIcon" src={naver_icon} alt="navericon" />
-                <NaverLoginTitle>네이버 로그인</NaverLoginTitle>
-            </NaverLoginBtn>
-        </NaverLoginComponentBlock>
+        <div>
+            <div className="loaderBox">
+                <div className="loader" />
+            </div>
+            <h3>{"네이버 로그인중입니다."}</h3>
+        </div>
     );
+    // return <div id="naverIdLogin" onClick={handleNaverLogin}></div>;
 };
 
 export default NaverLoginComponent;
 
 const NaverLoginComponentBlock = styled.div`
-    .naverIdLogin {
-        display: none;
-    }
     .NaverIcon {
-        width: 33px;
-        height: 33px;
+        margin-left: 1px;
+        width: 30px;
+        height: 30px;
     }
 `;
 

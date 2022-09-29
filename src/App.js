@@ -6,6 +6,7 @@ import KakaoLoginPage from "./Page/KakaoLoginPage";
 import HomePage from "./Page/HomePage";
 import AxiosSetting from "./setting/AxiosSetting";
 import { useEffect } from "react";
+import NaverLoginPage from "./Page/NaverLoginPage";
 
 function App() {
     useEffect(() => {
@@ -17,6 +18,7 @@ function App() {
             <Routes>
                 <Route element={<LoginPage />} path={"/"} />
                 <Route element={<KakaoLoginPage />} path={"/kakaologin"} />
+                <Route element={<NaverLoginPage />} path={"/naverlogin"} />
                 <Route element={<HomePage />} path={"/home"} />
             </Routes>
         </BrowserRouter>

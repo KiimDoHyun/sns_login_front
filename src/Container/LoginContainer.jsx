@@ -4,7 +4,7 @@ import { LoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
 import { useSetRecoilState } from "recoil";
 import { rc_user_userInfo } from "../store/user";
-import { CLIENT_ID, REDIRECT_URI } from "../key";
+import { CLIENT_ID, NAVER_KEY, REDIRECT_URI } from "../key";
 
 const LoginContainer = () => {
     const [ID, setID] = useState("");
@@ -12,6 +12,7 @@ const LoginContainer = () => {
     const [resultMsg, setResultMsg] = useState({ message: "", type: null });
     const navigate = useNavigate();
     const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
+    const { naver } = window;
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -37,6 +38,20 @@ const LoginContainer = () => {
     const onclickKakao = () => {
         window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     };
+
+    // 네이버 설정
+    useEffect(() => {
+        const naverLogin = new naver.LoginWithNaverId({
+            clientId: NAVER_KEY.CLIENT_ID,
+            callbackUrl: NAVER_KEY.CALLBAKC_URL,
+            isPopup: false,
+            // 버튼 타입 : 색상, 타입, 크기
+            loginButton: { color: "green", type: 3, height: 58 },
+            callbackHandle: true,
+        });
+
+        naverLogin.init();
+    }, []);
 
     const propDatas = {
         ID,

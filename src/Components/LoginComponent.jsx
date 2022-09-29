@@ -47,13 +47,16 @@ const LoginComponent = (props) => {
             </div>
 
             <div className="social_Login_Area">
-                <div
-                    className="social_Login_Button social_kakao"
-                    onClick={onclickKakao}
-                >
-                    <img src={kakao} alt="kakao" />
+                <div className="logo_size">
+                    <div
+                        className="social_Login_Button social_kakao"
+                        onClick={onclickKakao}
+                    >
+                        <img src={kakao} alt="kakao" />
+                    </div>
                 </div>
-                <NaverLoginContainer />
+                <div id="naverIdLogin"></div>
+                {/* <NaverLoginContainer /> */}
                 <GoogleLoginContainer />
             </div>
         </LoginComponentBlock>

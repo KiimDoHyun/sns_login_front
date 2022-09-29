@@ -5,6 +5,7 @@ import { NaverLoginApi } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { rc_user_userInfo } from "../store/user";
 import { useSetRecoilState } from "recoil";
+import client from "../api/client";
 
 const NaverLoginContainer = () => {
     const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
@@ -12,10 +13,18 @@ const NaverLoginContainer = () => {
     const navigate = useNavigate();
     const naverRef = useRef();
 
+    const naverLogin = new naver.LoginWithNaverId({
+        clientId: NAVER_KEY.CLIENT_ID,
+        callbackUrl: NAVER_KEY.CALLBAKC_URL,
+        isPopup: false,
+        // 버튼 타입 : 색상, 타입, 크기
+        loginButton: { color: "green", type: 3, height: 58 },
+        callbackHandle: true,
+    });
+
     const handleNaverLogin = () => {
-        //naverRef.current.children[0].click();
-        initNaverLogin();
-        userAccessToken();
+        // naverRef.current.children[0].click();
+        // onSuccessNaverLogin();
     };
 
     const onSuccessNaverLogin = async (info) => {
@@ -35,50 +44,53 @@ const NaverLoginContainer = () => {
     };
 
     const initNaverLogin = () => {
-        const naverLogin = new naver.LoginWithNaverId({
-            clientId: NAVER_KEY.CLIENT_ID,
-            callbackUrl: NAVER_KEY.CALLBAKC_URL,
-            isPopup: false,
-            // 버튼 타입 : 색상, 타입, 크기
-            loginButton: { color: "green", type: 3, height: 58 },
-            callbackHandle: true,
-        });
         naverLogin.init();
 
+        console.log(`naver`, naver);
         console.log(`naverLogin`, naverLogin);
 
-        naverLogin.getLoginStatus(async function (status) {
-            if (status) {
-                onSuccessNaverLogin(naverLogin);
-            }
-        });
+        // naverLogin.getLoginStatus(async function (status) {
+        //     if (status) {
+        //         onSuccessNaverLogin(naverLogin);
+        //     }
+        // });
     };
 
-    const userAccessToken = () => {
-        window.location.href.includes("access_token") && getToken();
-    };
+    // const userAccessToken = () => {
+    //     window.location.href.includes("access_token") && getToken();
+    // };
 
-    const getToken = () => {
-        const token = window.location.href.split("=")[1].split("&")[0];
-        console.log(`token`, token);
-    };
+    // const getToken = () => {
+    //     const token = window.location.href.split("=")[1].split("&")[0];
+    //     console.log(`token`, token);
+    // };
 
-    const propDatas = {
-        naverRef,
-        handleNaverLogin,
-    };
+    // useEffect(() => {
+    //     initNaverLogin();
+    // }, []);
 
     useEffect(() => {
-        const naverLogin = new naver.LoginWithNaverId({
-            clientId: NAVER_KEY.CLIENT_ID,
-            callbackUrl: NAVER_KEY.CALLBAKC_URL,
-            // 버튼 타입 : 색상, 타입, 크기
-            loginButton: { color: "green", type: 3, height: 44 },
-        });
-        naverLogin.init();
-    }, []);
+        const access_token = window.location.href.split("=")[1].split("&")[0];
 
-    return <NaverLoginComponent {...propDatas} />;
+        const getNaverData = async () => {
+            try {
+                const body = { access_token };
+                const response = await NaverLoginApi(body);
+                console.log(`res`, response);
+                navigate("/home");
+                rc_setUser_userInfo(response.data);
+            } catch (e) {
+                console.log(`error:`, e);
+            }
+        };
+        if (access_token) {
+            getNaverData();
+        }
+        // 토큰 가져와서
+        // api 호출
+        onSuccessNaverLogin();
+    }, []);
+    return <NaverLoginComponent />;
 };
 
 export default NaverLoginContainer;

@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import naver_icon from "../asset/image/naver_icon_rectangle.png";
 
 const NaverLoginComponent = (props) => {
     const { naverRef, handleNaverLogin } = props;
 
     return (
         <NaverLoginComponentBlock>
-            <div className="naverIdLogin" id="naverIdLogin"></div>
-            <div className="NaverLoginBtn" onClick={handleNaverLogin}>
-                <div className="NaverIcon" alt="navericon" />
-                <div className="NaverLogintitle">네이버로 로그인</div>
-            </div>
+            <div
+                ref={naverRef}
+                className="naverIdLogin"
+                id="naverIdLogin"
+            ></div>
+            <NaverLoginBtn onClick={handleNaverLogin}>
+                <img className="NaverIcon" src={naver_icon} alt="navericon" />
+                <NaverLoginTitle>네이버 로그인</NaverLoginTitle>
+            </NaverLoginBtn>
         </NaverLoginComponentBlock>
     );
 };
@@ -21,28 +26,26 @@ const NaverLoginComponentBlock = styled.div`
     .naverIdLogin {
         display: none;
     }
-    .NaverLoginBtn {
-        display: flex;
-        align-items: center;
-        width: 150px;
-        height: 56;
-        background-color: #03c75a;
-        border-radius: 6px;
-    }
-
     .NaverIcon {
-        width: 30px;
-        height: 30px;
-        margin-left: 10px;
-        background: url("/images/Login/navericon.png") no-repeat center;
-        background-size: 30px;
+        width: 33px;
+        height: 33px;
     }
+`;
 
-    .NaverLoginTitle {
-        margin-left: 90px;
-        color: ${({ theme }) => theme.White};
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 24px;
-    }
+const NaverLoginBtn = styled.button`
+    display: flex;
+    align-items: center;
+    width: 208px;
+    height: 40px;
+    background-color: #03c75a;
+    border: solid 1px #d2e3fc;
+    border-radius: 5px;
+`;
+
+const NaverLoginTitle = styled.span`
+    //color: ${({ theme }) => theme.White};
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
 `;

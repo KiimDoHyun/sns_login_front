@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { KakaoLoginApi } from "../api/auth";
 import KakaoLoginComponent from "../Components/KakaoLoginComponent";
+import { rc_user_userInfo } from "../store/user";
 
 const KakaoLoginContainer = () => {
     // 주소에서 코드 값을 가져온다.
     const [message, setMessage] = useState("카카오 로그인 중입니다.");
     const navigate = useNavigate();
+    const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
 
     // 백엔드로 인가 코드를 넘기고 사용자 정보를 받아온다.
     /*
@@ -30,14 +33,16 @@ const KakaoLoginContainer = () => {
             //
             try {
                 const { data } = await KakaoLoginApi({ code });
-                console.log("data: ", data);
-                if (data.type === "success") {
-                    setMessage("카카오 로그인 정보를 확인했습니다.");
+                setMessage("카카오 로그인 정보를 확인했습니다.");
+                rc_setUser_userInfo(data);
+                setTimeout(() => {
+                    navigate("/home");
+                }, 1000);
 
-                    setTimeout(() => {
-                        navigate("/home");
-                    }, 1000);
-                }
+                // 등록되어있지 않은 사용자는 fail 처리
+                // 회원가입페이지로 유도 해야하지만 생략함.
+                // if (data.type === "success") {
+                // }
             } catch (e) {
                 setMessage(
                     "카카오 로그에 실패했습니다. 로그인화면으로 돌아갑니다."

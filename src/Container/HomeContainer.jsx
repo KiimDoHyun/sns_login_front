@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { LogoutApi } from "../api/auth";
 import { testApi } from "../api/test";
 import HomeComponent from "../Components/HomeComponent";
+import { rc_user_userInfo } from "../store/user";
 
 const HomeContainer = () => {
     const [apiResult, setApiResult] = useState({
@@ -12,6 +14,7 @@ const HomeContainer = () => {
             loginType: "대기",
         },
     });
+    const rc_user_userInfoValue = useRecoilValue(rc_user_userInfo);
     const navigate = useNavigate();
     const onClickLogout = async () => {
         try {
@@ -38,10 +41,15 @@ const HomeContainer = () => {
         }
     };
 
+    useEffect(() => {
+        console.log("rc_user_userInfoValue :", rc_user_userInfoValue);
+    }, [rc_user_userInfoValue]);
+
     const propDatas = {
         onClickRequestApi,
         apiResult,
         onClickLogout,
+        rc_user_userInfoValue,
     };
 
     return <HomeComponent {...propDatas} />;

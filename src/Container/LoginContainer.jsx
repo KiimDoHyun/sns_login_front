@@ -4,21 +4,25 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { LoginApi, GoogleLoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
 import { CLIENT_ID, REDIRECT_URI, GOOGLE_KEY } from "../key";
+import { useSetRecoilState } from "recoil";
+import { rc_user_userInfo } from "../store/user";
 
 const LoginContainer = () => {
     const [ID, setID] = useState("");
     const [PW, setPW] = useState("");
     const [resultMsg, setResultMsg] = useState({ message: "", type: null });
     const navigate = useNavigate();
+    const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const {
-                data: { message, type },
+                data: { message, type, data },
             } = await LoginApi({ ID, PW });
             setResultMsg({ message: message || "Error", type });
+            rc_setUser_userInfo(data);
             if (type === "success") {
                 navigate("/home");
             }
@@ -42,11 +46,14 @@ const LoginContainer = () => {
     const onSuccessGoogleLogin = async (res) => {
         try {
             const body = { token: res.credential };
-            const response = await GoogleLoginApi(body);
-            console.log(`res`, response);
-            if (response.data.type === "success") {
-                navigate("/home");
-            }
+            const { data } = await GoogleLoginApi(body);
+
+            // 등록되어있지 않은 사용자는 fail 처리
+            // 회원가입페이지로 유도 해야하지만 생략함.
+            rc_setUser_userInfo(data);
+            navigate("/home");
+            // if (data.type === "success") {
+            // }
         } catch (e) {
             console.log(`res error`, res);
         }

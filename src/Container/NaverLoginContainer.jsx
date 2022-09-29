@@ -68,6 +68,16 @@ const NaverLoginContainer = () => {
         handleNaverLogin,
     };
 
+    useEffect(() => {
+        const naverLogin = new naver.LoginWithNaverId({
+            clientId: NAVER_KEY.CLIENT_ID,
+            callbackUrl: NAVER_KEY.CALLBAKC_URL,
+            // 버튼 타입 : 색상, 타입, 크기
+            loginButton: { color: "green", type: 3, height: 44 },
+        });
+        naverLogin.init();
+    }, []);
+
     return <NaverLoginComponent {...propDatas} />;
 };
 

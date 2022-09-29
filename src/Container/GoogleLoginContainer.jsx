@@ -32,6 +32,7 @@ const GoogleLoginContainer = () => {
         responseGoogle,
         onSuccessGoogleLogin,
     };
+
     return (
         <GoogleOAuthProvider clientId={GOOGLE_KEY.web.client_id}>
             <GoogleLoginComponent {...propDatas} />

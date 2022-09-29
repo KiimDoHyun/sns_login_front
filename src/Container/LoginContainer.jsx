@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
+import { useSetRecoilState } from "recoil";
+import { rc_user_userInfo } from "../store/user";
 import { CLIENT_ID, REDIRECT_URI } from "../key";
 
 const LoginContainer = () => {
@@ -9,15 +11,17 @@ const LoginContainer = () => {
     const [PW, setPW] = useState("");
     const [resultMsg, setResultMsg] = useState({ message: "", type: null });
     const navigate = useNavigate();
+    const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const {
-                data: { message, type },
+                data: { message, type, data },
             } = await LoginApi({ ID, PW });
             setResultMsg({ message: message || "Error", type });
+            rc_setUser_userInfo(data);
             if (type === "success") {
                 navigate("/home");
             }

@@ -45,7 +45,7 @@ const KakaoLoginContainer = () => {
                 // }
             } catch (e) {
                 setMessage(
-                    "카카오 로그에 실패했습니다. 로그인화면으로 돌아갑니다."
+                    "카카오 로그인에 실패했습니다. 로그인화면으로 돌아갑니다."
                 );
                 console.log(e);
             }

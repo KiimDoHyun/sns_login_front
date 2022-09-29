@@ -11,6 +11,7 @@ const NaverLoginContainer = () => {
     const rc_setUser_userInfo = useSetRecoilState(rc_user_userInfo);
     const { naver } = window;
     const navigate = useNavigate();
+    const [message, setMessage] = useState("네이버 로그인 중입니다.");
     const naverRef = useRef();
 
     const naverLogin = new naver.LoginWithNaverId({
@@ -33,8 +34,10 @@ const NaverLoginContainer = () => {
                 const body = { ...info };
                 const response = await NaverLoginApi(body);
                 console.log(`res`, response);
-                navigate("/home");
                 rc_setUser_userInfo(response.data);
+                setTimeout(() => {
+                    navigate("/home");
+                }, 100000);
             } catch (e) {
                 console.log(`error:`, e);
             }
@@ -76,10 +79,15 @@ const NaverLoginContainer = () => {
             try {
                 const body = { access_token };
                 const response = await NaverLoginApi(body);
-                console.log(`res`, response);
-                navigate("/home");
+                setMessage("네이버 로그인 정보를 확인했습니다.");
                 rc_setUser_userInfo(response.data);
+                setTimeout(() => {
+                    navigate("/home");
+                }, 1000);
             } catch (e) {
+                setMessage(
+                    "네이버 로그인에 실패했습니다. 로그인화면으로 돌아갑니다."
+                );
                 console.log(`error:`, e);
             }
         };
@@ -88,7 +96,7 @@ const NaverLoginContainer = () => {
         }
         // 토큰 가져와서
         // api 호출
-        onSuccessNaverLogin();
+        // onSuccessNaverLogin();
     }, []);
     return <NaverLoginComponent />;
 };

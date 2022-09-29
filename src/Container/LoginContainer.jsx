@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { LoginApi, GoogleLoginApi } from "../api/auth";
+import { LoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
-import { CLIENT_ID, REDIRECT_URI, GOOGLE_KEY } from "../key";
 import { useSetRecoilState } from "recoil";
 import { rc_user_userInfo } from "../store/user";
+import { CLIENT_ID, REDIRECT_URI } from "../key";
 
 const LoginContainer = () => {
     const [ID, setID] = useState("");
@@ -39,26 +38,6 @@ const LoginContainer = () => {
         window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     };
 
-    const responseGoogle = (response) => {
-        console.log(response);
-    };
-
-    const onSuccessGoogleLogin = async (res) => {
-        try {
-            const body = { token: res.credential };
-            const { data } = await GoogleLoginApi(body);
-
-            // 등록되어있지 않은 사용자는 fail 처리
-            // 회원가입페이지로 유도 해야하지만 생략함.
-            rc_setUser_userInfo(data);
-            navigate("/home");
-            // if (data.type === "success") {
-            // }
-        } catch (e) {
-            console.log(`res error`, res);
-        }
-    };
-
     const propDatas = {
         ID,
         setID,
@@ -67,15 +46,8 @@ const LoginContainer = () => {
         onSubmit,
         resultMsg,
         onclickKakao,
-        googleClientID: GOOGLE_KEY.web.client_id,
-        responseGoogle,
-        onSuccessGoogleLogin,
     };
-    return (
-        <GoogleOAuthProvider clientId={GOOGLE_KEY.web.client_id}>
-            <LoginComponent {...propDatas} />
-        </GoogleOAuthProvider>
-    );
+    return <LoginComponent {...propDatas} />;
 };
 
 export default LoginContainer;

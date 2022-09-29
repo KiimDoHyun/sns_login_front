@@ -3,21 +3,10 @@ import { Button, Form, Input, Label } from "reactstrap";
 import styled from "styled-components";
 import logo from "../logo.svg";
 import kakao from "../asset/image/kakao_login_medium_narrow.png";
-import { GoogleLogin } from "@react-oauth/google";
+import GoogleLoginContainer from "../Container/GoogleLoginContainer";
 
 const LoginComponent = (props) => {
-    const {
-        ID,
-        setID,
-        PW,
-        setPW,
-        onSubmit,
-        resultMsg,
-        onclickKakao,
-        googleClientID,
-        responseGoogle,
-        onSuccessGoogleLogin,
-    } = props;
+    const { ID, setID, PW, setPW, onSubmit, resultMsg, onclickKakao } = props;
 
     return (
         <LoginComponentBlock>
@@ -63,12 +52,7 @@ const LoginComponent = (props) => {
                 >
                     <img src={kakao} alt="kakao" />
                 </div>
-                <div>
-                    <GoogleLogin
-                        onSuccess={onSuccessGoogleLogin}
-                        onError={responseGoogle}
-                    />
-                </div>
+                <GoogleLoginContainer />
             </div>
         </LoginComponentBlock>
     );

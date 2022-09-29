@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { LoginApi, GoogleLoginApi } from "../api/auth";
+import { LoginApi } from "../api/auth";
 import LoginComponent from "../Components/LoginComponent";
-import { CLIENT_ID, REDIRECT_URI, GOOGLE_KEY } from "../key";
+import { CLIENT_ID, REDIRECT_URI } from "../key";
 
 const LoginContainer = () => {
     const [ID, setID] = useState("");
@@ -35,23 +34,6 @@ const LoginContainer = () => {
         window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     };
 
-    const responseGoogle = (response) => {
-        console.log(response);
-    };
-
-    const onSuccessGoogleLogin = async (res) => {
-        try {
-            const body = { token: res.credential };
-            const response = await GoogleLoginApi(body);
-            console.log(`res`, response);
-            if (response.data.type === "success") {
-                navigate("/home");
-            }
-        } catch (e) {
-            console.log(`res error`, res);
-        }
-    };
-
     const propDatas = {
         ID,
         setID,
@@ -60,15 +42,8 @@ const LoginContainer = () => {
         onSubmit,
         resultMsg,
         onclickKakao,
-        googleClientID: GOOGLE_KEY.web.client_id,
-        responseGoogle,
-        onSuccessGoogleLogin,
     };
-    return (
-        <GoogleOAuthProvider clientId={GOOGLE_KEY.web.client_id}>
-            <LoginComponent {...propDatas} />
-        </GoogleOAuthProvider>
-    );
+    return <LoginComponent {...propDatas} />;
 };
 
 export default LoginContainer;

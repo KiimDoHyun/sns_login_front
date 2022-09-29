@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LogoutApi } from "../api/auth";
 import { testApi } from "../api/test";
 import HomeComponent from "../Components/HomeComponent";
+import { googleLogout } from "@react-oauth/google";
 
 const HomeContainer = () => {
     const [apiResult, setApiResult] = useState({
@@ -14,6 +15,7 @@ const HomeContainer = () => {
     });
     const navigate = useNavigate();
     const onClickLogout = async () => {
+        googleLogout();
         try {
             const { data } = await LogoutApi();
             if (data.type === "logout_success") {

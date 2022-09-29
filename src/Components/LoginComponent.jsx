@@ -4,6 +4,7 @@ import styled from "styled-components";
 import logo from "../logo.svg";
 import kakao from "../asset/image/kakao_login_medium_narrow.png";
 import GoogleLoginContainer from "../Container/GoogleLoginContainer";
+import NaverLoginContainer from "../Container/NaverLoginContainer";
 
 const LoginComponent = (props) => {
     const { ID, setID, PW, setPW, onSubmit, resultMsg, onclickKakao } = props;
@@ -52,6 +53,7 @@ const LoginComponent = (props) => {
                 >
                     <img src={kakao} alt="kakao" />
                 </div>
+                <NaverLoginContainer />
                 <GoogleLoginContainer />
             </div>
         </LoginComponentBlock>

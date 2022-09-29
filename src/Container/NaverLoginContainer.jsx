@@ -25,7 +25,7 @@ const NaverLoginContainer = () => {
                 const response = await NaverLoginApi(body);
                 console.log(`res`, response);
                 navigate("/home");
-                // rc_setUser_userInfo(response.data);
+                rc_setUser_userInfo(response.data);
             } catch (e) {
                 console.log(`error:`, e);
             }

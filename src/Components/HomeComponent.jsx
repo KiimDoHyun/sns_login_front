@@ -9,6 +9,8 @@ const HomeComponent = (props) => {
         apiResult,
         rc_user_userInfoValue,
     } = props;
+
+    console.log("rc_user_userInfoValue: ", rc_user_userInfoValue);
     return (
         <HomeComponentBlock>
             <div className="header">
